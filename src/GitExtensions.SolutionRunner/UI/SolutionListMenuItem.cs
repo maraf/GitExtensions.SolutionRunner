@@ -22,6 +22,7 @@ namespace GitExtensions.SolutionRunner.UI
 
             Text = "Solution Runner";
             DropDownOpening += OnDropDownOpening;
+            DropDown.ShowItemToolTips = true;
         }
 
         private async void OnDropDownOpening(object sender, EventArgs e)
