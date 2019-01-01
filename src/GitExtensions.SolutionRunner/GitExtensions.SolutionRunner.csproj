@@ -48,8 +48,9 @@
     <NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
     <Authors>Maraf</Authors>
     <Company>Neptuo</Company>
-    <Description>An example of GitExtensions plugin distributed as NuGet package.</Description>
+    <Description>A Visual Studio solution runner.</Description>
     <PackageProjectUrl>https://github.com/maraf/GitExtensions.SolutionRunner</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/maraf/GitExtensions.SolutionRunner/master/assets/SolutionRunner.png</PackageIconUrl>
   </PropertyGroup>
   <Target Name="SetPackageProperties" BeforeTargets="GenerateNuspec">
     <PropertyGroup>
