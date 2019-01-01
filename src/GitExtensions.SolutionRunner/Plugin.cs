@@ -1,4 +1,8 @@
 ﻿using GitExtensions.SolutionRunner.Properties;
+using GitExtensions.SolutionRunner.Services;
+using GitExtensions.SolutionRunner.UI;
+using GitUI;
+using GitUI.CommandsDialogs;
 using GitUIPluginInterfaces;
 using ResourceManager;
 using System;
@@ -25,5 +29,60 @@ namespace GitExtensions.SolutionRunner
 
         public override bool Execute(GitUIEventArgs e)
             => true;
+
+        private MenuStripEx FindMainMenu(IGitUICommands commands)
+        {
+            FormBrowse form = (FormBrowse)((GitUICommands)commands).BrowseRepo;
+            if (form != null)
+            {
+                MenuStripEx mainMenu = form.Controls.OfType<MenuStripEx>().FirstOrDefault();
+                return mainMenu;
+            }
+
+            return null;
+        }
+
+        private MainMenuItem FindMainMenuItem(IGitUICommands commands, MenuStripEx mainMenu = null)
+        {
+            if (mainMenu == null)
+                mainMenu = FindMainMenu(commands);
+
+            if (mainMenu == null)
+                return null;
+
+            return mainMenu.Items.OfType<MainMenuItem>().FirstOrDefault();
+        }
+
+        public override void Register(IGitUICommands commands)
+        {
+            base.Register(commands);
+
+            if (commands.GitModule.IsValidGitWorkingDir())
+            {
+                MenuStripEx mainMenu = FindMainMenu(commands);
+                if (mainMenu != null && FindMainMenuItem(commands, mainMenu) == null)
+                {
+                    var provider = new DirectorySolutionFileProvider(commands.GitModule.WorkingDir);
+
+                    mainMenu.Items.Add(new MainMenuItem(provider));
+                }
+            }
+        }
+
+        public override void Unregister(IGitUICommands commands)
+        {
+            base.Unregister(commands);
+
+            MenuStripEx mainMenu = FindMainMenu(commands);
+            if (mainMenu != null)
+            {
+                MainMenuItem mainMenuItem = FindMainMenuItem(commands, mainMenu);
+                if (mainMenuItem != null)
+                {
+                    mainMenu.Items.Remove(mainMenuItem);
+                    mainMenuItem.Dispose();
+                }
+            }
+        }
     }
 }

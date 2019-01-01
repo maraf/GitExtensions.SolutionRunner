@@ -17,6 +17,9 @@
   
   <!-- Reference to GitExtensions dlls. -->
   <ItemGroup>
+    <Reference Include="GitUI">
+      <HintPath>..\..\references\GitExtensions\GitUI.dll</HintPath>
+    </Reference>
     <Reference Include="GitUIPluginInterfaces">
       <HintPath>..\..\references\GitExtensions\GitUIPluginInterfaces.dll</HintPath>
     </Reference>
