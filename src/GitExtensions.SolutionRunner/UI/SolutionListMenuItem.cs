@@ -12,11 +12,11 @@ namespace GitExtensions.SolutionRunner.UI
     /// <summary>
     /// Main menu item.
     /// </summary>
-    public class MainMenuItem : ToolStripMenuItem
+    public class SolutionListMenuItem : ToolStripMenuItem
     {
         private readonly ISolutionFileProvider provider;
 
-        internal MainMenuItem(ISolutionFileProvider provider)
+        internal SolutionListMenuItem(ISolutionFileProvider provider)
         {
             this.provider = provider;
 
@@ -43,8 +43,9 @@ namespace GitExtensions.SolutionRunner.UI
 
                 IEnumerable<string> solutionFiles = await provider.GetListAsync();
                 foreach (string filePath in solutionFiles)
-                    newItems.Add(new SolutionFileMenuItem(filePath));
+                    newItems.Add(new SolutionItemMenuItem(filePath));
 
+                newItems.Sort((x, y) => x.Text.CompareTo(y.Text));
                 return newItems.ToArray();
             });
         }

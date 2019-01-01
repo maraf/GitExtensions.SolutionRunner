@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace GitExtensions.SolutionRunner.UI
 {
-    public class SolutionFileMenuItem : ToolStripMenuItem
+    public class SolutionItemMenuItem : ToolStripMenuItem
     {
         private readonly string filePath;
 
-        public SolutionFileMenuItem(string filePath)
+        public SolutionItemMenuItem(string filePath)
         {
             this.filePath = filePath;
 

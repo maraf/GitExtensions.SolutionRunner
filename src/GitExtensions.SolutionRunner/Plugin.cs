@@ -42,7 +42,7 @@ namespace GitExtensions.SolutionRunner
             return null;
         }
 
-        private MainMenuItem FindMainMenuItem(IGitUICommands commands, MenuStripEx mainMenu = null)
+        private SolutionListMenuItem FindMainMenuItem(IGitUICommands commands, MenuStripEx mainMenu = null)
         {
             if (mainMenu == null)
                 mainMenu = FindMainMenu(commands);
@@ -50,7 +50,7 @@ namespace GitExtensions.SolutionRunner
             if (mainMenu == null)
                 return null;
 
-            return mainMenu.Items.OfType<MainMenuItem>().FirstOrDefault();
+            return mainMenu.Items.OfType<SolutionListMenuItem>().FirstOrDefault();
         }
 
         public override void Register(IGitUICommands commands)
@@ -64,7 +64,7 @@ namespace GitExtensions.SolutionRunner
                 {
                     var provider = new DirectorySolutionFileProvider(commands.GitModule.WorkingDir);
 
-                    mainMenu.Items.Add(new MainMenuItem(provider));
+                    mainMenu.Items.Add(new SolutionListMenuItem(provider));
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace GitExtensions.SolutionRunner
             MenuStripEx mainMenu = FindMainMenu(commands);
             if (mainMenu != null)
             {
-                MainMenuItem mainMenuItem = FindMainMenuItem(commands, mainMenu);
+                SolutionListMenuItem mainMenuItem = FindMainMenuItem(commands, mainMenu);
                 if (mainMenuItem != null)
                 {
                     mainMenu.Items.Remove(mainMenuItem);
