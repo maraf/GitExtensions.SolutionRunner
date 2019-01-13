@@ -12,10 +12,12 @@ namespace GitExtensions.SolutionRunner.UI
     public class SolutionItemMenuItem : ToolStripMenuItem
     {
         private readonly string filePath;
+        private readonly PluginSettings settings;
 
-        public SolutionItemMenuItem(string filePath)
+        internal SolutionItemMenuItem(string filePath, PluginSettings settings)
         {
             this.filePath = filePath;
+            this.settings = settings;
 
             Text = Path.GetFileName(filePath);
             ToolTipText = filePath;
@@ -23,7 +25,10 @@ namespace GitExtensions.SolutionRunner.UI
 
         protected override void OnClick(EventArgs e)
         {
-            Process.Start(filePath);
+            if (String.IsNullOrEmpty(settings.ExecutablePath))
+                Process.Start(filePath);
+            else
+                Process.Start(settings.ExecutablePath, settings.ExecutableArguments?.Replace(PluginSettings.DefaultExecutableArguments, filePath) ?? filePath);
 
             base.OnClick(e);
         }

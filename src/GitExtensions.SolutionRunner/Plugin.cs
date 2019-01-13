@@ -20,6 +20,8 @@ namespace GitExtensions.SolutionRunner
     [Export(typeof(IGitPlugin))]
     public class Plugin : GitPluginBase
     {
+        internal PluginSettings Configuration { get; private set; }
+
         public Plugin()
         {
             Name = "SolutionRunner";
@@ -29,6 +31,9 @@ namespace GitExtensions.SolutionRunner
 
         public override bool Execute(GitUIEventArgs e)
             => true;
+
+        public override IEnumerable<ISetting> GetSettings()
+            => Configuration;
 
         private MenuStripEx FindMainMenu(IGitUICommands commands)
         {
@@ -57,6 +62,8 @@ namespace GitExtensions.SolutionRunner
         {
             base.Register(commands);
 
+            Configuration = new PluginSettings(Settings);
+
             if (commands.GitModule.IsValidGitWorkingDir())
             {
                 MenuStripEx mainMenu = FindMainMenu(commands);
@@ -64,7 +71,7 @@ namespace GitExtensions.SolutionRunner
                 {
                     var provider = new DirectorySolutionFileProvider(commands.GitModule.WorkingDir);
 
-                    mainMenu.Items.Add(new SolutionListMenuItem(provider));
+                    mainMenu.Items.Add(new SolutionListMenuItem(provider, Configuration));
                 }
             }
         }

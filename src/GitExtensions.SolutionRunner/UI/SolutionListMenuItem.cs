@@ -15,10 +15,12 @@ namespace GitExtensions.SolutionRunner.UI
     public class SolutionListMenuItem : ToolStripMenuItem
     {
         private readonly ISolutionFileProvider provider;
+        private readonly PluginSettings settings;
 
-        internal SolutionListMenuItem(ISolutionFileProvider provider)
+        internal SolutionListMenuItem(ISolutionFileProvider provider, PluginSettings settings)
         {
             this.provider = provider;
+            this.settings = settings;
 
             Text = "Solution Runner";
             DropDownOpening += OnDropDownOpening;
@@ -44,7 +46,7 @@ namespace GitExtensions.SolutionRunner.UI
 
                 IEnumerable<string> solutionFiles = await provider.GetListAsync();
                 foreach (string filePath in solutionFiles)
-                    newItems.Add(new SolutionItemMenuItem(filePath));
+                    newItems.Add(new SolutionItemMenuItem(filePath, settings));
 
                 newItems.Sort((x, y) => x.Text.CompareTo(y.Text));
                 return newItems.ToArray();
