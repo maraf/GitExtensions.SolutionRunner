@@ -16,9 +16,10 @@ namespace GitExtensions.SolutionRunner.Services
             this.rootPath = rootPath;
         }
 
-        public Task<IReadOnlyCollection<string>> GetListAsync()
+        public Task<IReadOnlyCollection<string>> GetListAsync(bool isTopLevelSearchOnly)
         {
-            string[] solutionFiles = Directory.GetFiles(rootPath, "*.sln", SearchOption.AllDirectories);
+            SearchOption searchOption = isTopLevelSearchOnly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories;
+            string[] solutionFiles = Directory.GetFiles(rootPath, "*.sln", searchOption);
             return Task.FromResult<IReadOnlyCollection<string>>(solutionFiles);
         }
     }

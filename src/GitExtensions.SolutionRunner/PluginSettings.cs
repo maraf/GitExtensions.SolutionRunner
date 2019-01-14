@@ -21,6 +21,11 @@ namespace GitExtensions.SolutionRunner
         /// Gets a property holding arguments for executa ble to start.
         /// </summary>
         public static StringSetting ExecutableArgumentsProperty { get; } = new StringSetting("Executable Arguments", $"Optional arguments for executable ({DefaultExecutableArguments} will be replaced with selected solution file)", DefaultExecutableArguments);
+
+        /// <summary>
+        /// Gets a property holding arguments for executa ble to start.
+        /// </summary>
+        public static BoolSetting IsTopLevelSearchedOnlyProperty { get; } = new BoolSetting("Top Level Search", "Search only top level directory structure", false);
         
         private readonly ISettingsSource source;
 
@@ -33,6 +38,11 @@ namespace GitExtensions.SolutionRunner
         /// Gets current value of <see cref="ExecutableArgumentsProperty"/>.
         /// </summary>
         public string ExecutableArguments => source.GetValue(ExecutableArgumentsProperty.Name, ExecutableArgumentsProperty.DefaultValue, t => t);
+
+        /// <summary>
+        /// Gets current value of <see cref="IsTopLevelSearchedOnlyProperty"/>.
+        /// </summary>
+        public bool IsTopLevelSearchedOnly => source.GetValue(IsTopLevelSearchedOnlyProperty.Name, IsTopLevelSearchedOnlyProperty.DefaultValue, t => Boolean.Parse(t));
         
         public PluginSettings(ISettingsSource source)
         {
@@ -45,10 +55,11 @@ namespace GitExtensions.SolutionRunner
 
         static PluginSettings()
         {
-            properties = new List<ISetting>(2)
+            properties = new List<ISetting>(3)
             {
                 ExecutablePathProperty,
                 ExecutableArgumentsProperty,
+                IsTopLevelSearchedOnlyProperty,
             };
         }
 

@@ -16,7 +16,7 @@ namespace GitExtensions.SolutionRunner.UI
     {
         private readonly ISolutionFileProvider provider;
         private readonly PluginSettings settings;
-
+        
         internal SolutionListMenuItem(ISolutionFileProvider provider, PluginSettings settings)
         {
             this.provider = provider;
@@ -29,13 +29,13 @@ namespace GitExtensions.SolutionRunner.UI
 
         private async void OnDropDownOpening(object sender, EventArgs e)
         {
-            foreach (var item in DropDown.Items.OfType<ToolStripMenuItem>().ToList())
+            foreach (var item in DropDown.Items.OfType<SolutionItemMenuItem>().ToList())
                 DropDown.Items.Remove(item);
-
-            DropDown.Items.Add(new ToolStripMenuItem("Loading..."));
+            
+            int loadingIndex = DropDown.Items.Add(new LoadingMenuItem());
 
             DropDown.Items.AddRange(await CreateBundleItemsAsync());
-            DropDown.Items.RemoveAt(0);
+            DropDown.Items.RemoveAt(loadingIndex);
         }
 
         private async Task<ToolStripItem[]> CreateBundleItemsAsync()
@@ -44,11 +44,12 @@ namespace GitExtensions.SolutionRunner.UI
             {
                 List<ToolStripItem> newItems = new List<ToolStripItem>();
 
-                IEnumerable<string> solutionFiles = await provider.GetListAsync();
+                IEnumerable<string> solutionFiles = await provider.GetListAsync(settings.IsTopLevelSearchedOnly);
                 foreach (string filePath in solutionFiles)
                     newItems.Add(new SolutionItemMenuItem(filePath, settings));
 
                 newItems.Sort((x, y) => x.Text.CompareTo(y.Text));
+                
                 return newItems.ToArray();
             });
         }
