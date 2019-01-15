@@ -16,7 +16,7 @@ namespace GitExtensions.SolutionRunner.UI
     {
         private readonly ISolutionFileProvider provider;
         private readonly PluginSettings settings;
-        
+
         internal SolutionListMenuItem(ISolutionFileProvider provider, PluginSettings settings)
         {
             this.provider = provider;
@@ -29,27 +29,46 @@ namespace GitExtensions.SolutionRunner.UI
 
         private async void OnDropDownOpening(object sender, EventArgs e)
         {
-            foreach (var item in DropDown.Items.OfType<SolutionItemMenuItem>().ToList())
-                DropDown.Items.Remove(item);
-            
-            int loadingIndex = DropDown.Items.Add(new LoadingMenuItem());
+            DropDown.Items.Clear();
 
-            DropDown.Items.AddRange(await CreateBundleItemsAsync());
-            DropDown.Items.RemoveAt(loadingIndex);
+            var loading = new LoadingMenuItem();
+            DropDown.Items.Add(loading);
+
+            HashSet<string> solutions = new HashSet<string>();
+            DropDown.Items.AddRange(await CreateBundleItemsAsync(settings.IsTopLevelSearchedOnly, solutions));
+            DropDown.Items.Remove(loading);
+
+            if (settings.IsTopLevelSearchedOnly)
+            {
+                var separator = new ToolStripSeparator();
+                DropDown.Items.Add(separator);
+                DropDown.Items.Add(loading);
+
+                ToolStripItem[] items = await CreateBundleItemsAsync(false, solutions);
+                if (items.Length > 0)
+                    DropDown.Items.AddRange(items);
+                else
+                    DropDown.Items.Remove(separator);
+
+                DropDown.Items.Remove(loading);
+            }
         }
 
-        private async Task<ToolStripItem[]> CreateBundleItemsAsync()
+        private async Task<ToolStripItem[]> CreateBundleItemsAsync(bool isTopLevelSearchedOnly, HashSet<string> solutions)
         {
             return await Task.Run(async () =>
             {
                 List<ToolStripItem> newItems = new List<ToolStripItem>();
 
-                IEnumerable<string> solutionFiles = await provider.GetListAsync(settings.IsTopLevelSearchedOnly);
+                IEnumerable<string> solutionFiles = await provider.GetListAsync(isTopLevelSearchedOnly);
                 foreach (string filePath in solutionFiles)
-                    newItems.Add(new SolutionItemMenuItem(filePath, settings));
+                {
+                    if (solutions.Add(filePath))
+                        newItems.Add(new SolutionItemMenuItem(filePath, settings));
+                }
 
                 newItems.Sort((x, y) => x.Text.CompareTo(y.Text));
-                
+
                 return newItems.ToArray();
             });
         }
