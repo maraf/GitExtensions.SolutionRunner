@@ -22,7 +22,7 @@ namespace GitExtensions.SolutionRunner.UI
             this.provider = provider;
             this.settings = settings;
 
-            Text = "Solution Runner";
+            Text = "&Solution Runner";
             DropDownOpening += OnDropDownOpening;
             DropDown.ShowItemToolTips = true;
         }

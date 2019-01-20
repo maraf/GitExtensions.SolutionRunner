@@ -19,7 +19,7 @@ namespace GitExtensions.SolutionRunner.UI
             this.filePath = filePath;
             this.settings = settings;
 
-            Text = Path.GetFileName(filePath);
+            Text = "&" + Path.GetFileName(filePath);
             ToolTipText = filePath;
         }
 
