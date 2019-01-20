@@ -52,6 +52,7 @@
     <Description>A Visual Studio solution runner.</Description>
     <PackageProjectUrl>https://github.com/maraf/GitExtensions.SolutionRunner</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/maraf/GitExtensions.SolutionRunner/master/assets/SolutionRunner.png</PackageIconUrl>
+    <PackageTags>Neptuo GitExtensions</PackageTags>
   </PropertyGroup>
   <Target Name="SetPackageProperties" BeforeTargets="GenerateNuspec">
     <PropertyGroup>
