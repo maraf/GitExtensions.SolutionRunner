@@ -22,9 +22,11 @@ namespace GitExtensions.SolutionRunner.UI
             this.provider = provider;
             this.settings = settings;
 
-            Text = "&Solution Runner";
+            Text = "Solution R&unner";
             DropDownOpening += OnDropDownOpening;
             DropDown.ShowItemToolTips = true;
+
+            DropDown.Items.Add(new LoadingMenuItem());
         }
 
         private async void OnDropDownOpening(object sender, EventArgs e)
@@ -37,6 +39,9 @@ namespace GitExtensions.SolutionRunner.UI
             HashSet<string> solutions = new HashSet<string>();
             DropDown.Items.AddRange(await CreateBundleItemsAsync(settings.IsTopLevelSearchedOnly, solutions));
             DropDown.Items.Remove(loading);
+
+            if (DropDown.Items.Count > 0)
+                DropDown.Items[0].Select();
 
             if (settings.IsTopLevelSearchedOnly)
             {
