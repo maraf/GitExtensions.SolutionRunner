@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GitExtensions.SolutionRunner": {
+      "commandName": "Executable",
+      "executablePath": "$(SolutionDir)\\references\\GitExtensions\\GitExtensions.exe"
+    }
+  }
+}

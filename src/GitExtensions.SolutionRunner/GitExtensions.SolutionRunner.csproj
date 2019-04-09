@@ -33,7 +33,7 @@
 
   <!-- Before building project ensure we have debug GitExtensions instance (for references and debugging). -->
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="powershell.exe ..\..\tools\Download-GitExtensions.ps1" />
+    <Exec Command="powershell.exe -ExecutionPolicy Unrestricted ..\..\tools\Download-GitExtensions.ps1" />
   </Target>
 
   <!-- After build, copy plugin to debug GitExtensions instance (for debugging). -->
