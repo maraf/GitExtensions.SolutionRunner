@@ -15,6 +15,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitExtensions.Extensibility" Version="0.1.*" />
+  </ItemGroup>
   
   <!-- Reference to GitExtensions dlls. -->
   <ItemGroup>
@@ -31,22 +35,11 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
-  <!-- Before building project ensure we have debug GitExtensions instance (for references and debugging). -->
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="powershell.exe -ExecutionPolicy Unrestricted ..\..\tools\Download-GitExtensions.ps1 -Version $(GitExtensionsReferenceVersion)" />
-  </Target>
-
-  <!-- After build, copy plugin to debug GitExtensions instance (for debugging). -->
   <PropertyGroup>
-    <GitExtensionsDebugPluginsPath>..\..\references\GitExtensions\Plugins\</GitExtensionsDebugPluginsPath>
-    <GitExtensionsReferenceSource>github</GitExtensionsReferenceSource>
-    <GitExtensionsReferenceVersion>v3.1</GitExtensionsReferenceVersion>
+    <GitExtensionsReferenceVersion>v3.2.1</GitExtensionsReferenceVersion>
   </PropertyGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GitExtensionsDebugPluginsPath)" />
-  </Target>
 
-  <!-- Pack as .nupkg with dependency on GitExtensions.Plugins -->
+  <!-- Pack as .nupkg with dependency on GitExtensions.Extensibility -->
   <PropertyGroup>
     <NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
     <Authors>Maraf</Authors>
