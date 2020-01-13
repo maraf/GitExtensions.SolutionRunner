@@ -69,7 +69,7 @@ namespace GitExtensions.SolutionRunner
                 MenuStripEx mainMenu = FindMainMenu(commands);
                 if (mainMenu != null && FindMainMenuItem(commands, mainMenu) == null)
                 {
-                    var provider = new DirectorySolutionFileProvider(commands.GitModule.WorkingDir);
+                    var provider = new GitSolutionFileProvider(commands.GitModule.WorkingDir, commands.GitModule.GitExecutable);
 
                     mainMenu.Items.Add(new SolutionListMenuItem(provider, Configuration));
                 }

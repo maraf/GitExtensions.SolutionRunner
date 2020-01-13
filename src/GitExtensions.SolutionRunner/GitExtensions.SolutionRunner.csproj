@@ -22,6 +22,9 @@
   
   <!-- Reference to GitExtensions dlls. -->
   <ItemGroup>
+    <Reference Include="GitExtUtils">
+      <HintPath>..\..\references\GitExtensions\GitExtUtils.dll</HintPath>
+    </Reference>
     <Reference Include="GitUI">
       <HintPath>..\..\references\GitExtensions\GitUI.dll</HintPath>
     </Reference>
