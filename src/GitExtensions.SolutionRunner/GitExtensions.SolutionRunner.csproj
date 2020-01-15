@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <GitExtensionsReferenceVersion>v3.2.1</GitExtensionsReferenceVersion>
+    <GitExtensionsReferenceVersion>v3.3.1</GitExtensionsReferenceVersion>
     <GitExtensionsDownloadPath>../../references</GitExtensionsDownloadPath>
   </PropertyGroup>
 
