@@ -23,6 +23,7 @@ namespace GitExtensions.SolutionRunner
         internal PluginSettings Configuration { get; private set; }
 
         public Plugin()
+            : base(PluginSettings.HasProperties)
         {
             Name = "SolutionRunner";
             Description = "Solution Runner";

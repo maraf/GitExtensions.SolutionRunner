@@ -53,6 +53,8 @@ namespace GitExtensions.SolutionRunner
 
         private static readonly List<ISetting> properties;
 
+        public static bool HasProperties => properties.Count > 0;
+
         static PluginSettings()
         {
             properties = new List<ISetting>(3)
