@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using GitUIPluginInterfaces;
 using System.Linq;
+using System.Text;
 
 namespace GitExtensions.SolutionRunner.Services
 {
@@ -19,7 +20,7 @@ namespace GitExtensions.SolutionRunner.Services
 
         public async Task<IReadOnlyCollection<string>> GetListAsync(bool isTopLevelSearchOnly)
         {
-            IProcess process = executor.Start("ls-files -coz -- *.sln", redirectOutput: true);
+            IProcess process = executor.Start("ls-files -coz -- *.sln", redirectOutput: true, outputEncoding: Encoding.Default);
             string output = await process.StandardOutput.ReadToEndAsync();
 
             var result = output.Split(new[] { '\0' }, System.StringSplitOptions.RemoveEmptyEntries)
