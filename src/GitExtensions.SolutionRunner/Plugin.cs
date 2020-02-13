@@ -5,15 +5,9 @@ using GitUI;
 using GitUI.CommandsDialogs;
 using GitUIPluginInterfaces;
 using ResourceManager;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace GitExtensions.SolutionRunner
 {
@@ -31,7 +25,10 @@ namespace GitExtensions.SolutionRunner
         }
 
         public override bool Execute(GitUIEventArgs e)
-            => true;
+        {
+            e.GitUICommands.StartSettingsDialog(this);
+            return false;
+        }
 
         public override IEnumerable<ISetting> GetSettings()
             => Configuration;
