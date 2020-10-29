@@ -16,10 +16,17 @@ namespace GitExtensions.SolutionRunner.Services
             this.rootPath = rootPath;
         }
 
-        public Task<IReadOnlyCollection<string>> GetListAsync(bool isTopLevelSearchOnly)
+        public Task<IReadOnlyCollection<string>> GetListAsync(bool isTopLevelSearchOnly, bool includeWorkspaces)
         {
             SearchOption searchOption = isTopLevelSearchOnly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories;
             string[] solutionFiles = Directory.GetFiles(rootPath, "*.sln", searchOption);
+
+            if (includeWorkspaces) 
+            {
+                solutionFiles = solutionFiles
+                    .Concat(Directory.GetFiles(this.rootPath, "*.code-workspace", searchOption))
+                    .ToArray();
+            }
             return Task.FromResult<IReadOnlyCollection<string>>(solutionFiles);
         }
     }

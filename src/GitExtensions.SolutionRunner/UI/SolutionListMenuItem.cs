@@ -37,7 +37,7 @@ namespace GitExtensions.SolutionRunner.UI
             DropDown.Items.Add(loading);
 
             HashSet<string> solutions = new HashSet<string>();
-            DropDown.Items.AddRange(await CreateBundleItemsAsync(settings.IsTopLevelSearchedOnly, solutions));
+            DropDown.Items.AddRange(await CreateBundleItemsAsync(settings.IsTopLevelSearchedOnly, settings.EnableVSCodeWorkspaces, solutions));
             DropDown.Items.Remove(loading);
 
             if (DropDown.Items.Count > 0)
@@ -49,7 +49,7 @@ namespace GitExtensions.SolutionRunner.UI
                 DropDown.Items.Add(separator);
                 DropDown.Items.Add(loading);
 
-                ToolStripItem[] items = await CreateBundleItemsAsync(false, solutions);
+                ToolStripItem[] items = await CreateBundleItemsAsync(false, settings.EnableVSCodeWorkspaces, solutions);
                 if (items.Length > 0)
                     DropDown.Items.AddRange(items);
                 else
@@ -59,13 +59,13 @@ namespace GitExtensions.SolutionRunner.UI
             }
         }
 
-        private async Task<ToolStripItem[]> CreateBundleItemsAsync(bool isTopLevelSearchedOnly, HashSet<string> solutions)
+        private async Task<ToolStripItem[]> CreateBundleItemsAsync(bool isTopLevelSearchedOnly, bool includeWorkspaces, HashSet<string> solutions)
         {
             return await Task.Run(async () =>
             {
                 List<ToolStripItem> newItems = new List<ToolStripItem>();
 
-                IEnumerable<string> solutionFiles = await provider.GetListAsync(isTopLevelSearchedOnly);
+                IEnumerable<string> solutionFiles = await provider.GetListAsync(isTopLevelSearchedOnly, includeWorkspaces);
                 foreach (string filePath in solutionFiles)
                 {
                     if (solutions.Add(filePath))

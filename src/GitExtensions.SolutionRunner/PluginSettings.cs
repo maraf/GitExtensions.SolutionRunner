@@ -26,7 +26,12 @@ namespace GitExtensions.SolutionRunner
         /// Gets a property holding arguments for executa ble to start.
         /// </summary>
         public static BoolSetting IsTopLevelSearchedOnlyProperty { get; } = new BoolSetting("Top Level Search", "Search only top level directory structure", false);
-        
+
+        /// <summary>
+        /// Includes VSCode workspace files (.code-workspace)
+        /// </summary>
+        public static BoolSetting EnableVSCodeWorkspacesProperty { get; } = new BoolSetting("Include VSCode workspaces", "Include VSCode workspace files (.code-workspace)", false);
+
         private readonly ISettingsSource source;
 
         /// <summary>
@@ -43,7 +48,12 @@ namespace GitExtensions.SolutionRunner
         /// Gets current value of <see cref="IsTopLevelSearchedOnlyProperty"/>.
         /// </summary>
         public bool IsTopLevelSearchedOnly => source.GetValue(IsTopLevelSearchedOnlyProperty.Name, IsTopLevelSearchedOnlyProperty.DefaultValue, t => Boolean.Parse(t));
-        
+
+        /// <summary>
+        /// Gets current value of <see cref="EnableVSCodeWorkspacesProperty"/>.
+        /// </summary>
+        public bool EnableVSCodeWorkspaces => source.GetValue(EnableVSCodeWorkspacesProperty.Name, EnableVSCodeWorkspacesProperty.DefaultValue, t => Boolean.Parse(t));
+
         public PluginSettings(ISettingsSource source)
         {
             this.source = source;
@@ -57,11 +67,12 @@ namespace GitExtensions.SolutionRunner
 
         static PluginSettings()
         {
-            properties = new List<ISetting>(3)
+            properties = new List<ISetting>(4)
             {
                 ExecutablePathProperty,
                 ExecutableArgumentsProperty,
                 IsTopLevelSearchedOnlyProperty,
+                EnableVSCodeWorkspacesProperty
             };
         }
 
