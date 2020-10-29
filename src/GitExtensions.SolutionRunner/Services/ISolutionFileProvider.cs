@@ -8,6 +8,6 @@ namespace GitExtensions.SolutionRunner.Services
 {
     public interface ISolutionFileProvider
     {
-        Task<IReadOnlyCollection<string>> GetListAsync(bool isTopLevelSearchOnly);
+        Task<IReadOnlyCollection<string>> GetListAsync(bool isTopLevelSearchOnly, bool includeWorkspaces);
     }
 }
