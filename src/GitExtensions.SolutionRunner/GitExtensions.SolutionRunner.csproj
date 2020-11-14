@@ -50,8 +50,8 @@
     <NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
     <Authors>Maraf</Authors>
     <Company>Neptuo</Company>
-    <Description>A Visual Studio solution runner.</Description>
-    <PackageProjectUrl>https://github.com/maraf/GitExtensions.SolutionRunner</PackageProjectUrl>
+    <Description>A Visual Studio solution and VS code workspace runner.</Description>
+    <PackageProjectUrl>https://www.neptuo.com/project/desktop/gitextensions.solutionrunner/</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/maraf/GitExtensions.SolutionRunner/master/assets/SolutionRunner.png</PackageIconUrl>
     <PackageTags>Neptuo GitExtensions</PackageTags>
   </PropertyGroup>
