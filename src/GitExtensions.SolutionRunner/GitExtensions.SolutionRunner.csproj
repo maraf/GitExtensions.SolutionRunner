@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="GitExtensions.Extensibility" Version="0.1.*" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
   
   <!-- Reference to GitExtensions dlls. -->
@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <GitExtensionsReferenceVersion>v3.3.1</GitExtensionsReferenceVersion>
+    <GitExtensionsReferenceVersion>v3.5</GitExtensionsReferenceVersion>
     <GitExtensionsDownloadPath>../../references</GitExtensionsDownloadPath>
   </PropertyGroup>
 
