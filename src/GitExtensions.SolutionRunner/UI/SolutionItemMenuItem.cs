@@ -35,7 +35,8 @@ namespace GitExtensions.SolutionRunner.UI
                 process.StartInfo.FileName = settings.ExecutablePath; 
                 process.StartInfo.Arguments =  settings.ExecutableArguments?.Replace(PluginSettings.DefaultExecutableArguments, filePath) ?? filePath;
 
-                if(settings.ShouldRunAsAdmin)
+                if (settings.ShouldRunAsAdmin)
+
                     process.StartInfo.Verb = RunAsAdminConfiguration;
 
                 process.Start();
