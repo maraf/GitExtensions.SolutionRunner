@@ -11,6 +11,8 @@ namespace GitExtensions.SolutionRunner.UI
 {
     public class SolutionItemMenuItem : ToolStripMenuItem
     {
+        private const string RunAsAdminConfiguration = "runas";
+
         private readonly string filePath;
         private readonly PluginSettings settings;
 
@@ -25,10 +27,19 @@ namespace GitExtensions.SolutionRunner.UI
 
         protected override void OnClick(EventArgs e)
         {
-            if (String.IsNullOrEmpty(settings.ExecutablePath))
+            if (string.IsNullOrEmpty(settings.ExecutablePath))
                 Process.Start(filePath);
             else
-                Process.Start(settings.ExecutablePath, settings.ExecutableArguments?.Replace(PluginSettings.DefaultExecutableArguments, filePath) ?? filePath);
+            {
+                var process = new Process();
+                process.StartInfo.FileName = settings.ExecutablePath; 
+                process.StartInfo.Arguments =  settings.ExecutableArguments?.Replace(PluginSettings.DefaultExecutableArguments, filePath) ?? filePath;
+
+                if (settings.ShouldRunAsAdmin)
+                    process.StartInfo.Verb = RunAsAdminConfiguration;
+
+                process.Start();
+            }
 
             base.OnClick(e);
         }

@@ -31,6 +31,11 @@ namespace GitExtensions.SolutionRunner
         /// Includes VSCode workspace files (.code-workspace)
         /// </summary>
         public static BoolSetting EnableVSCodeWorkspacesProperty { get; } = new BoolSetting("Include VSCode workspaces", "Include VSCode workspace files (.code-workspace)", false);
+        
+        /// <summary>
+        /// Start executable as Administrator
+        /// </summary>
+        public static BoolSetting ShouldRunAsAdminProperty { get; } = new BoolSetting("Run as Administrator", "Run as Administrator", false);
 
         private readonly ISettingsSource source;
 
@@ -53,6 +58,11 @@ namespace GitExtensions.SolutionRunner
         /// Gets current value of <see cref="EnableVSCodeWorkspacesProperty"/>.
         /// </summary>
         public bool EnableVSCodeWorkspaces => source.GetValue(EnableVSCodeWorkspacesProperty.Name, EnableVSCodeWorkspacesProperty.DefaultValue, t => Boolean.Parse(t));
+        
+        /// <summary>
+        /// Gets current value of <see cref="ShouldRunAsAdminProperty"/>.
+        /// </summary>
+        public bool ShouldRunAsAdmin =>  source.GetValue(ShouldRunAsAdminProperty.Name, ShouldRunAsAdminProperty.DefaultValue, t => Boolean.Parse(t));
 
         public PluginSettings(ISettingsSource source)
         {
@@ -72,7 +82,8 @@ namespace GitExtensions.SolutionRunner
                 ExecutablePathProperty,
                 ExecutableArgumentsProperty,
                 IsTopLevelSearchedOnlyProperty,
-                EnableVSCodeWorkspacesProperty
+                EnableVSCodeWorkspacesProperty,
+                ShouldRunAsAdminProperty
             };
         }
 
