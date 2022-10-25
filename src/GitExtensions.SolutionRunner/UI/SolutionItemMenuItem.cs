@@ -28,12 +28,18 @@ namespace GitExtensions.SolutionRunner.UI
         protected override void OnClick(EventArgs e)
         {
             if (string.IsNullOrEmpty(settings.ExecutablePath))
+            {
                 Process.Start(filePath);
+            }
             else
             {
+                string arguments = settings.ExecutableArguments
+                    ?.Replace(PluginSettings.SolutionFileToken, filePath)
+                    ?.Replace(PluginSettings.SolutionDirectoryToken, Path.GetDirectoryName(filePath));
+
                 var process = new Process();
                 process.StartInfo.FileName = settings.ExecutablePath; 
-                process.StartInfo.Arguments =  settings.ExecutableArguments?.Replace(PluginSettings.DefaultExecutableArguments, filePath) ?? filePath;
+                process.StartInfo.Arguments = arguments ?? filePath;
 
                 if (settings.ShouldRunAsAdmin)
                     process.StartInfo.Verb = RunAsAdminConfiguration;
