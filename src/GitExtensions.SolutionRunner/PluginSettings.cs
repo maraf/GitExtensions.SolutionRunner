@@ -10,7 +10,9 @@ namespace GitExtensions.SolutionRunner
 {
     internal class PluginSettings : IEnumerable<ISetting>
     {
-        public const string DefaultExecutableArguments = "{SolutionPath}";
+        public const string DefaultExecutableArguments = SolutionFileToken;
+        public const string SolutionFileToken = "{SolutionPath}";
+        public const string SolutionDirectoryToken = "{SolutionDirectory}";
 
         /// <summary>
         /// Gets a property holding path to executable to start.
@@ -20,7 +22,7 @@ namespace GitExtensions.SolutionRunner
         /// <summary>
         /// Gets a property holding arguments for executa ble to start.
         /// </summary>
-        public static StringSetting ExecutableArgumentsProperty { get; } = new StringSetting("Executable Arguments", $"Optional arguments for executable ({DefaultExecutableArguments} will be replaced with selected solution file)", DefaultExecutableArguments);
+        public static StringSetting ExecutableArgumentsProperty { get; } = new StringSetting("Executable Arguments", $"Optional arguments for executable (with {SolutionFileToken} and {SolutionDirectoryToken} variables)", DefaultExecutableArguments);
 
         /// <summary>
         /// Gets a property holding arguments for executa ble to start.
