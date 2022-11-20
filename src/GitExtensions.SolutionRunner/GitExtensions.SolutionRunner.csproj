@@ -16,10 +16,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="GitExtensions.Extensibility" Version="0.1.*" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="GitExtensions.Extensibility" Version="0.3.0.57" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
   
   <!-- Reference to GitExtensions dlls. -->
@@ -41,7 +40,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <GitExtensionsReferenceVersion>v3.5</GitExtensionsReferenceVersion>
+    <GitExtensionsReferenceVersion>v4</GitExtensionsReferenceVersion>
     <GitExtensionsDownloadPath>../../references</GitExtensionsDownloadPath>
   </PropertyGroup>
 

@@ -44,27 +44,27 @@ namespace GitExtensions.SolutionRunner
         /// <summary>
         /// Gets current value of <see cref="ExecutablePathProperty"/>.
         /// </summary>
-        public string ExecutablePath => source.GetValue(ExecutablePathProperty.Name, ExecutablePathProperty.DefaultValue, t => t);
+        public string ExecutablePath => source.GetValue(ExecutablePathProperty.Name);
 
         /// <summary>
         /// Gets current value of <see cref="ExecutableArgumentsProperty"/>.
         /// </summary>
-        public string ExecutableArguments => source.GetValue(ExecutableArgumentsProperty.Name, ExecutableArgumentsProperty.DefaultValue, t => t);
+        public string ExecutableArguments => source.GetValue(ExecutableArgumentsProperty.Name);
 
         /// <summary>
         /// Gets current value of <see cref="IsTopLevelSearchedOnlyProperty"/>.
         /// </summary>
-        public bool IsTopLevelSearchedOnly => source.GetValue(IsTopLevelSearchedOnlyProperty.Name, IsTopLevelSearchedOnlyProperty.DefaultValue, t => Boolean.Parse(t));
+        public bool IsTopLevelSearchedOnly => Convert.ToBoolean(source.GetValue(IsTopLevelSearchedOnlyProperty.Name));
 
         /// <summary>
         /// Gets current value of <see cref="EnableVSCodeWorkspacesProperty"/>.
         /// </summary>
-        public bool EnableVSCodeWorkspaces => source.GetValue(EnableVSCodeWorkspacesProperty.Name, EnableVSCodeWorkspacesProperty.DefaultValue, t => Boolean.Parse(t));
+        public bool EnableVSCodeWorkspaces => Convert.ToBoolean(source.GetValue(EnableVSCodeWorkspacesProperty.Name));
         
         /// <summary>
         /// Gets current value of <see cref="ShouldRunAsAdminProperty"/>.
         /// </summary>
-        public bool ShouldRunAsAdmin =>  source.GetValue(ShouldRunAsAdminProperty.Name, ShouldRunAsAdminProperty.DefaultValue, t => Boolean.Parse(t));
+        public bool ShouldRunAsAdmin =>  Convert.ToBoolean(source.GetValue(ShouldRunAsAdminProperty.Name));
 
         public PluginSettings(ISettingsSource source)
         {
