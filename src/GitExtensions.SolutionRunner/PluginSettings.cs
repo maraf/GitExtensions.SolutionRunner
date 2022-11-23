@@ -44,27 +44,28 @@ namespace GitExtensions.SolutionRunner
         /// <summary>
         /// Gets current value of <see cref="ExecutablePathProperty"/>.
         /// </summary>
-        public string ExecutablePath => source.GetValue(ExecutablePathProperty.Name);
+        public string ExecutablePath => source.GetString(ExecutablePathProperty.Name, ExecutablePathProperty.DefaultValue);
 
         /// <summary>
         /// Gets current value of <see cref="ExecutableArgumentsProperty"/>.
         /// </summary>
-        public string ExecutableArguments => source.GetValue(ExecutableArgumentsProperty.Name);
+        public string ExecutableArguments => source.GetString(ExecutableArgumentsProperty.Name, ExecutablePathProperty.DefaultValue);
 
         /// <summary>
         /// Gets current value of <see cref="IsTopLevelSearchedOnlyProperty"/>.
         /// </summary>
-        public bool IsTopLevelSearchedOnly => Convert.ToBoolean(source.GetValue(IsTopLevelSearchedOnlyProperty.Name));
+        public bool IsTopLevelSearchedOnly => source.GetBool(IsTopLevelSearchedOnlyProperty.Name, IsTopLevelSearchedOnlyProperty.DefaultValue);
+
 
         /// <summary>
         /// Gets current value of <see cref="EnableVSCodeWorkspacesProperty"/>.
         /// </summary>
-        public bool EnableVSCodeWorkspaces => Convert.ToBoolean(source.GetValue(EnableVSCodeWorkspacesProperty.Name));
+        public bool EnableVSCodeWorkspaces => source.GetBool(EnableVSCodeWorkspacesProperty.Name, EnableVSCodeWorkspacesProperty.DefaultValue);
         
         /// <summary>
         /// Gets current value of <see cref="ShouldRunAsAdminProperty"/>.
         /// </summary>
-        public bool ShouldRunAsAdmin =>  Convert.ToBoolean(source.GetValue(ShouldRunAsAdminProperty.Name));
+        public bool ShouldRunAsAdmin =>  source.GetBool(ShouldRunAsAdminProperty.Name, ShouldRunAsAdminProperty.DefaultValue);
 
         public PluginSettings(ISettingsSource source)
         {
