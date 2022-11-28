@@ -1,10 +1,6 @@
 ﻿using GitUIPluginInterfaces;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GitExtensions.SolutionRunner
 {
@@ -44,27 +40,28 @@ namespace GitExtensions.SolutionRunner
         /// <summary>
         /// Gets current value of <see cref="ExecutablePathProperty"/>.
         /// </summary>
-        public string ExecutablePath => source.GetValue(ExecutablePathProperty.Name, ExecutablePathProperty.DefaultValue, t => t);
+        public string ExecutablePath => source.GetString(ExecutablePathProperty.Name, ExecutablePathProperty.DefaultValue);
 
         /// <summary>
         /// Gets current value of <see cref="ExecutableArgumentsProperty"/>.
         /// </summary>
-        public string ExecutableArguments => source.GetValue(ExecutableArgumentsProperty.Name, ExecutableArgumentsProperty.DefaultValue, t => t);
+        public string ExecutableArguments => source.GetString(ExecutableArgumentsProperty.Name, ExecutablePathProperty.DefaultValue);
 
         /// <summary>
         /// Gets current value of <see cref="IsTopLevelSearchedOnlyProperty"/>.
         /// </summary>
-        public bool IsTopLevelSearchedOnly => source.GetValue(IsTopLevelSearchedOnlyProperty.Name, IsTopLevelSearchedOnlyProperty.DefaultValue, t => Boolean.Parse(t));
+        public bool IsTopLevelSearchedOnly => source.GetBool(IsTopLevelSearchedOnlyProperty.Name, IsTopLevelSearchedOnlyProperty.DefaultValue);
+
 
         /// <summary>
         /// Gets current value of <see cref="EnableVSCodeWorkspacesProperty"/>.
         /// </summary>
-        public bool EnableVSCodeWorkspaces => source.GetValue(EnableVSCodeWorkspacesProperty.Name, EnableVSCodeWorkspacesProperty.DefaultValue, t => Boolean.Parse(t));
+        public bool EnableVSCodeWorkspaces => source.GetBool(EnableVSCodeWorkspacesProperty.Name, EnableVSCodeWorkspacesProperty.DefaultValue);
         
         /// <summary>
         /// Gets current value of <see cref="ShouldRunAsAdminProperty"/>.
         /// </summary>
-        public bool ShouldRunAsAdmin =>  source.GetValue(ShouldRunAsAdminProperty.Name, ShouldRunAsAdminProperty.DefaultValue, t => Boolean.Parse(t));
+        public bool ShouldRunAsAdmin =>  source.GetBool(ShouldRunAsAdminProperty.Name, ShouldRunAsAdminProperty.DefaultValue);
 
         public PluginSettings(ISettingsSource source)
         {
