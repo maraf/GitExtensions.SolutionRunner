@@ -23,25 +23,19 @@ namespace GitExtensions.SolutionRunner.UI
 
         protected override void OnClick(EventArgs e)
         {
-            if (string.IsNullOrEmpty(settings.ExecutablePath))
-            {
-                Process.Start(filePath);
-            }
-            else
-            {
-                string arguments = settings.ExecutableArguments
-                    ?.Replace(PluginSettings.SolutionFileToken, filePath)
-                    ?.Replace(PluginSettings.SolutionDirectoryToken, Path.GetDirectoryName(filePath));
+            string arguments = settings.ExecutableArguments
+                ?.Replace(PluginSettings.SolutionFileToken, filePath)
+                ?.Replace(PluginSettings.SolutionDirectoryToken, Path.GetDirectoryName(filePath));
 
-                var process = new Process();
-                process.StartInfo.FileName = settings.ExecutablePath; 
-                process.StartInfo.Arguments = arguments ?? filePath;
+            var process = new Process();
+            process.StartInfo.FileName = settings.ExecutablePath ?? filePath; 
+            process.StartInfo.Arguments = arguments ?? filePath;
+            process.StartInfo.UseShellExecute = true;
 
-                if (settings.ShouldRunAsAdmin)
-                    process.StartInfo.Verb = RunAsAdminConfiguration;
+            if (settings.ShouldRunAsAdmin)
+                process.StartInfo.Verb = RunAsAdminConfiguration;
 
-                process.Start();
-            }
+            process.Start();
 
             base.OnClick(e);
         }

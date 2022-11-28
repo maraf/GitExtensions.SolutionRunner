@@ -5,6 +5,7 @@ using GitUI;
 using GitUI.CommandsDialogs;
 using GitUIPluginInterfaces;
 using ResourceManager;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace GitExtensions.SolutionRunner
         public Plugin()
             : base(PluginSettings.HasProperties)
         {
+            Id = new Guid("92ff3885-c08a-477c-a04a-84fb8ec47d5c");
             Name = "SolutionRunner";
             Description = "Solution Runner";
             Icon = Resources.Icon;
