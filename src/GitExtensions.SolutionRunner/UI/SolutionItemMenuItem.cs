@@ -28,7 +28,9 @@ namespace GitExtensions.SolutionRunner.UI
                 ?.Replace(PluginSettings.SolutionDirectoryToken, Path.GetDirectoryName(filePath));
 
             var process = new Process();
-            process.StartInfo.FileName = settings.ExecutablePath ?? filePath; 
+            process.StartInfo.FileName = !string.IsNullOrWhiteSpace(settings.ExecutablePath)
+                ? settings.ExecutablePath
+                : filePath;
             process.StartInfo.Arguments = arguments ?? filePath;
             process.StartInfo.UseShellExecute = true;
 
