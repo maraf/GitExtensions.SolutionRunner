@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -8,6 +9,8 @@ namespace GitExtensions.SolutionRunner.UI
     public class SolutionItemMenuItem : ToolStripMenuItem
     {
         private const string RunAsAdminConfiguration = "runas";
+        private const string VsCodeWorkspace = ".code-workspace";
+        private const string VsCodeExe = "code";
 
         private readonly string filePath;
         private readonly PluginSettings settings;
@@ -35,11 +38,32 @@ namespace GitExtensions.SolutionRunner.UI
             process.StartInfo.UseShellExecute = true;
 
             if (settings.ShouldRunAsAdmin)
-                process.StartInfo.Verb = RunAsAdminConfiguration;
-
-            process.Start();
+                StartAdminProcess(process, e);
+            else
+                process.Start();
 
             base.OnClick(e);
+        }
+
+        private void StartAdminProcess(Process process, EventArgs e)
+        {
+            if (IsVisualStudioCodeWorkspace())
+                process.StartInfo.FileName = VsCodeExe;
+
+            process.StartInfo.Verb = RunAsAdminConfiguration;
+
+            try
+            {
+                process.Start();
+            }
+            catch (Win32Exception ex)
+            {
+            }
+        }
+
+        private bool IsVisualStudioCodeWorkspace()
+        {
+            return filePath.EndsWith(VsCodeWorkspace, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
