@@ -2,15 +2,15 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace GitExtensions.SolutionRunner.UI
 {
     public class SolutionItemMenuItem : ToolStripMenuItem
     {
         private const string RunAsAdminConfiguration = "runas";
-        private const string VsCodeWorkspace = ".code-workspace";
-        private const string VsCodeExe = "code";
 
         private readonly string filePath;
         private readonly PluginSettings settings;
@@ -31,39 +31,64 @@ namespace GitExtensions.SolutionRunner.UI
                 ?.Replace(PluginSettings.SolutionDirectoryToken, Path.GetDirectoryName(filePath));
 
             var process = new Process();
-            process.StartInfo.FileName = !string.IsNullOrWhiteSpace(settings.ExecutablePath)
-                ? settings.ExecutablePath
-                : filePath;
-            process.StartInfo.Arguments = arguments ?? filePath;
+
+            process.StartInfo.FileName = string.IsNullOrWhiteSpace(settings.ExecutablePath)
+                ? GetPreferredExecutablePathOrFilePath()
+                : settings.ExecutablePath;
+
+            process.StartInfo.Arguments = string.IsNullOrWhiteSpace(arguments) ? filePath : arguments;
             process.StartInfo.UseShellExecute = true;
 
             if (settings.ShouldRunAsAdmin)
-                StartAdminProcess(process, e);
-            else
-                process.Start();
+                process.StartInfo.Verb = RunAsAdminConfiguration;
+
+            process.Start();
 
             base.OnClick(e);
         }
 
-        private void StartAdminProcess(Process process, EventArgs e)
+        private string GetPreferredExecutablePathOrFilePath()
         {
-            if (IsVisualStudioCodeWorkspace())
-                process.StartInfo.FileName = VsCodeExe;
+            var programId = TryFindPreferredExecutableProgram();
+            var executablePath = TryFindPreferredExecutableProgramPath(programId);
 
-            process.StartInfo.Verb = RunAsAdminConfiguration;
-
-            try
-            {
-                process.Start();
-            }
-            catch (Win32Exception ex)
-            {
-            }
+            return executablePath ?? filePath;
         }
 
-        private bool IsVisualStudioCodeWorkspace()
+        private object TryFindPreferredExecutableProgram()
         {
-            return filePath.EndsWith(VsCodeWorkspace, StringComparison.OrdinalIgnoreCase);
+            var fileExtension = Path.GetExtension(filePath)!;
+            var extensionKey = Registry.ClassesRoot.OpenSubKey(fileExtension);
+            var programId = GetAssociatedProgramId(extensionKey);
+
+            var hasFileExtensionNotAssociatedProgramId = programId == null;
+            if (hasFileExtensionNotAssociatedProgramId)
+            {
+                extensionKey = extensionKey?.OpenSubKey("OpenWithProgids");
+                programId = extensionKey?.GetValueNames().FirstOrDefault();
+            }
+
+            extensionKey?.Close();
+
+            return programId;
+        }
+
+        private static string TryFindPreferredExecutableProgramPath(object programId)
+        {
+            if(programId == null)
+                return null;
+
+            var programKey = Registry.ClassesRoot.OpenSubKey(programId + @"\shell\open\command");
+            var runTemplate = GetAssociatedProgramId(programKey);
+
+            programKey?.Close();
+
+            return runTemplate?.ToString()?.Replace(" \"%1\"", "");
+        }
+
+        private static object GetAssociatedProgramId(RegistryKey extensionKey)
+        {
+            return extensionKey.GetValue(string.Empty);
         }
     }
 }
