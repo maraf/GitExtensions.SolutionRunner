@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
@@ -11,6 +12,7 @@ namespace GitExtensions.SolutionRunner.UI
     public class SolutionItemMenuItem : ToolStripMenuItem
     {
         private const string RunAsAdminConfiguration = "runas";
+        private const string ExtractExecutablePattern = @"^""([^""""]*)""";
 
         private readonly string filePath;
         private readonly PluginSettings settings;
@@ -83,7 +85,9 @@ namespace GitExtensions.SolutionRunner.UI
 
             programKey?.Close();
 
-            return runTemplate?.ToString()?.Replace(" \"%1\"", "");
+            var executableApplication = Regex.Match(runTemplate.ToString(), ExtractExecutablePattern).Value;
+
+            return executableApplication;
         }
 
         private static object GetAssociatedProgramId(RegistryKey extensionKey)
