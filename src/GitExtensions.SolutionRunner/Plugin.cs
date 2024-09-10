@@ -3,12 +3,14 @@ using GitExtensions.SolutionRunner.Services;
 using GitExtensions.SolutionRunner.UI;
 using GitUI;
 using GitUI.CommandsDialogs;
-using GitUIPluginInterfaces;
-using ResourceManager;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+
+using GitExtensions.Extensibility.Git;
+using GitExtensions.Extensibility.Plugins;
+using GitExtensions.Extensibility.Settings;
 
 namespace GitExtensions.SolutionRunner
 {
@@ -63,13 +65,12 @@ namespace GitExtensions.SolutionRunner
             base.Register(commands);
 
             Configuration = new PluginSettings(Settings);
-
-            if (commands.GitModule.IsValidGitWorkingDir())
+            if (commands.Module.IsValidGitWorkingDir())
             {
                 MenuStripEx mainMenu = FindMainMenu(commands);
                 if (mainMenu != null && FindMainMenuItem(commands, mainMenu) == null)
                 {
-                    var provider = new GitSolutionFileProvider(commands.GitModule.WorkingDir, commands.GitModule.GitExecutable);
+                    var provider = new GitSolutionFileProvider(commands.Module.WorkingDir, commands.Module.GitExecutable);
 
                     mainMenu.Items.Add(new SolutionListMenuItem(provider, Configuration));
                 }

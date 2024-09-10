@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using GitUIPluginInterfaces;
 using System.Linq;
 using System.Text;
+
+using GitExtensions.Extensibility;
 
 namespace GitExtensions.SolutionRunner.Services
 {

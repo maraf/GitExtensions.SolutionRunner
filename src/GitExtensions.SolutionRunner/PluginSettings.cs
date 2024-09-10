@@ -1,6 +1,7 @@
-﻿using GitUIPluginInterfaces;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+
+using GitExtensions.Extensibility.Settings;
 
 namespace GitExtensions.SolutionRunner
 {
@@ -35,7 +36,7 @@ namespace GitExtensions.SolutionRunner
         /// </summary>
         public static BoolSetting ShouldRunAsAdminProperty { get; } = new BoolSetting("Run as Administrator", "Run as Administrator", false);
 
-        private readonly ISettingsSource source;
+        private readonly SettingsSource source;
 
         /// <summary>
         /// Gets current value of <see cref="ExecutablePathProperty"/>.
@@ -63,7 +64,7 @@ namespace GitExtensions.SolutionRunner
         /// </summary>
         public bool ShouldRunAsAdmin =>  source.GetBool(ShouldRunAsAdminProperty.Name, ShouldRunAsAdminProperty.DefaultValue);
 
-        public PluginSettings(ISettingsSource source)
+        public PluginSettings(SettingsSource source)
         {
             this.source = source;
         }
