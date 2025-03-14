@@ -17,7 +17,7 @@ namespace GitExtensions.SolutionRunner.Services
         public Task<IReadOnlyCollection<string>> GetListAsync(bool isTopLevelSearchOnly, bool includeWorkspaces)
         {
             SearchOption searchOption = isTopLevelSearchOnly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories;
-            string[] solutionFiles = Directory.GetFiles(rootPath, "*.sln", searchOption);
+            string[] solutionFiles = Directory.GetFiles(rootPath, "*.sln?", searchOption);
 
             if (includeWorkspaces) 
             {
