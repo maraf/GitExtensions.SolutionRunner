@@ -21,7 +21,7 @@ namespace GitExtensions.SolutionRunner.Services
 
         public async Task<IReadOnlyCollection<string>> GetListAsync(bool isTopLevelSearchOnly, bool includeWorkspaces)
         {
-            string command = "ls-files -cz *.sln" + (includeWorkspaces ? " *.code-workspace" : "");
+            string command = "ls-files -cz *.sln *.slnx" + (includeWorkspaces ? " *.code-workspace" : "");
             IProcess process = executor.Start(command, redirectOutput: true, outputEncoding: Encoding.Default);
             string output = await process.StandardOutput.ReadToEndAsync();
 
