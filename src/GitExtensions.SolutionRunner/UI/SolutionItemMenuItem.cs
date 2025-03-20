@@ -38,7 +38,7 @@ namespace GitExtensions.SolutionRunner.UI
                 ? GetPreferredExecutablePathOrFilePath()
                 : settings.ExecutablePath;
 
-            process.StartInfo.Arguments = string.IsNullOrWhiteSpace(arguments) ? filePath : arguments;
+            process.StartInfo.Arguments = string.IsNullOrWhiteSpace(arguments) ? $"\"{filePath}\"" : arguments;
             process.StartInfo.UseShellExecute = true;
 
             if (settings.ShouldRunAsAdmin)
@@ -92,7 +92,7 @@ namespace GitExtensions.SolutionRunner.UI
 
         private static object GetAssociatedProgramId(RegistryKey extensionKey)
         {
-            return extensionKey.GetValue(string.Empty);
+            return extensionKey?.GetValue(string.Empty);
         }
     }
 }
