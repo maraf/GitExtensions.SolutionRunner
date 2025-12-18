@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <VersionPrefix>8.1.0</VersionPrefix>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <VersionPrefix>9.0.0</VersionPrefix>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="GitExtensions.Extensibility" Version="0.3.*" />
+    <PackageReference Include="GitExtensions.Extensibility" Version="0.4.*" />
   </ItemGroup>
 
   <!-- Reference to GitExtensions dlls. -->
@@ -19,7 +20,7 @@
     <Reference Include="System.ComponentModel.Composition" HintPath="$(GitExtensionsPath)\System.ComponentModel.Composition.dll" />
   </ItemGroup>
   <PropertyGroup>
-    <GitExtensionsReferenceVersion>v5.0</GitExtensionsReferenceVersion>
+    <GitExtensionsReferenceVersion>v6.0</GitExtensionsReferenceVersion>
     <GitExtensionsDownloadPath>../../references</GitExtensionsDownloadPath>
   </PropertyGroup>
 
