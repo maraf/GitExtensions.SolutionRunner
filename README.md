@@ -21,7 +21,7 @@ Install via the Git Extensions Plugin Manager:
 
 | Plugin Version | Git Extensions Version | .NET Runtime |
 |---------------|------------------------|--------------|
-| 8.1.0+        | 6.0.2+                | .NET 9.0     |
+| 9.0.0+        | 6.0.2+                | .NET 9.0     |
 | 8.0.x         | 5.x                   | .NET 8.0     |
 
 ## Building from Source
