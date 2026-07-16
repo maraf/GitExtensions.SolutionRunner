@@ -5,8 +5,8 @@ A Visual Studio solution runner plugin for Git Extensions
 
 ## Requirements
 
-- **Git Extensions 6.0.2+**: This plugin is compatible with Git Extensions 6.0.2 and later
-- **.NET 9.0 Desktop Runtime**: Required by Git Extensions 6.x ([Download](https://dotnet.microsoft.com/download/dotnet/9.0))
+- **Git Extensions 7.0.0+**: This plugin is compatible with Git Extensions 7.0.0 and later
+- **.NET 10.0 Desktop Runtime**: Required by Git Extensions 7.x ([Download](https://dotnet.microsoft.com/download/dotnet/10.0))
 
 ## Installation
 
@@ -21,6 +21,7 @@ Install via the Git Extensions Plugin Manager:
 
 | Plugin Version | Git Extensions Version | .NET Runtime |
 |---------------|------------------------|--------------|
+| 10.0.0+        | 7.0.0+                | .NET 10.0    |
 | 9.0.0+        | 6.0.2+                | .NET 9.0     |
 | 8.0.x         | 5.x                   | .NET 8.0     |
 
@@ -28,7 +29,7 @@ Install via the Git Extensions Plugin Manager:
 
 ```bash
 # Prerequisites
-- .NET 9.0 SDK or later
+- .NET 10.0 SDK or later
 
 # Build
 dotnet build src/GitExtensions.SolutionRunner/GitExtensions.SolutionRunner.csproj
